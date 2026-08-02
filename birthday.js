@@ -911,16 +911,18 @@ function resize(){
 let resizeRAF = 0;
 window.addEventListener('resize', () => { if (resizeRAF) return; resizeRAF = requestAnimationFrame(() => { resizeRAF = 0; resize(); }); });
 
-resize();
+window.addEventListener('load', () => {
+  resize();
 
-if (reduceMotion){
-  drawFinal();
-} else {
-  buildMotes();
-  document.fonts && document.fonts.ready.then(() => { refreshRig(); setDraw(0); });
-  enter();
-  replay.addEventListener('click', resetAll);
-}
+  if (reduceMotion){
+    drawFinal();
+  } else {
+    buildMotes();
+    document.fonts && document.fonts.ready.then(() => { refreshRig(); setDraw(0); });
+    enter();
+    replay.addEventListener('click', resetAll);
+  }
+});
 
 /* ============================================================
    RECORDING HOOK — the rig draws + fires after its pre-roll
